@@ -1,3 +1,8 @@
+/* Lcd brillo contraste
+ * Copyright: codigoelectronica.com
+ * Author: Oscar Fernandez
+ * License: MIT
+ */
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
@@ -101,9 +106,3 @@ void loop() {
   digitalWrite(PIN_13, LOW);
   delay(100);
 }
-
-void limpiarCaracteres(){
-  
-
-}
-
