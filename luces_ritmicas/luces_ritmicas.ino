@@ -1,42 +1,34 @@
 /*Luces ritmicas
-*Copyright: codigoelectronica.com
-* Author: Oscar Fernandez
+* Copyright: codigoelectronica.com
+* Author: Oscar Fernandez Alzate @oscar_fedezal
 * License: MIT
 */
 
+//Creamos un array donde colocamos los números de los pines
+//que van a crear el efecto rítmico
+int inputsPints[] = {2,3,4,5,6,7,8};
+
+
 void setup() {
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
   
+  //En un for recorremos el array completo
+  for(int index = 0; index < 7; index ++){
+    //Colocamos como salida los pines declarados en el array
+    pinMode(inputsPints[index], OUTPUT);
+  }
 }
 
 void loop() {
-  digitalWrite(2, HIGH);   
-  delay(1000);             
-  digitalWrite(3, HIGH);   
-  delay(1000);             
-  digitalWrite(4, HIGH);   
-  delay(1000);
-  digitalWrite(5, HIGH);   
-  delay(1000);
-  digitalWrite(6, HIGH);   
-  delay(1000);
-  digitalWrite(7, HIGH);   
-  delay(1000);
-  digitalWrite(2, LOW);    
-  delay(1000);
-  digitalWrite(3, LOW);    
-  delay(1000);
-  digitalWrite(4, LOW);    
-  delay(1000);
-  digitalWrite(5, LOW);    
-  delay(1000);
-  digitalWrite(6, LOW);    
-  delay(1000);
-  digitalWrite(7, LOW);    
-  delay(1000);
+  
+  for(int index = 0; index < 7; index ++){
+    //En el mismo for, colocamos como estado alto al pin
+    digitalWrite(inputsPints[index], HIGH);     
+    delay(500);
+  }
+  
+  for(int index = 0; index < 7; index ++){
+    //En el mismo for, colocamos como estado bajo al pin
+    digitalWrite(inputsPints[index], LOW);     
+    delay(200);
+  }
 }
