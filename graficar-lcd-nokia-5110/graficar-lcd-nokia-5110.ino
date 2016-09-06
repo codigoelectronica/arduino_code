@@ -36,7 +36,7 @@ void loop() {
   delay(2000);
   
   display.clearDisplay();
-  setMessage("Linea");
+  setMessage("Rectangulo");
   display.drawRect(0, 10, 84, 32, BLACK);
   display.display();
   delay(2000);
