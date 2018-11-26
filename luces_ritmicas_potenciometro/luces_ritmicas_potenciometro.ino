@@ -1,68 +1,47 @@
-/*Luces ritmicas potenciometro
-* Copyright: codigoelectronica.com
-* Author: Oscar Fernandez
+/*Luces ritmicas potenciómetro
+* Copyright: codigoelectronica.com <codioelectronica@gmail.com>
+* Author: Oscar Fernandez Alzate <oscarfdzalz@gmail.com>
 * License: MIT
 */
+//Pines para los leds
+const int pins[8] = {2,3,4,5,6,7,8,9}; 
+
+//Secuencia de los leds
+const byte vumeter[9] = {0b00000000,  //0
+                          0b00000001, //1
+                          0b00000011, //2
+                          0b00000111, //3
+                          0b00001111, //4
+                          0b00011111, //5
+                          0b00111111, //6
+                          0b01111111, //7
+                          0b11111111  //8
+                        };
+
 void setup() {
-  //Iniciamos puerto serial
-  Serial.begin(9600);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
+  //Ponemos los pines como salida
+  for(int i = 0; i < 8; i++) {
+    pinMode(pins[i], OUTPUT);  
+  }
 }
 
 void loop() {
-  //Leemos puesrto analogo
-  int sensorValue = analogRead(A0);
-  //Calculamos voltaje
-  float voltaje = (sensorValue*5.0)/1024;
-  //Verificamos el voltaje para encender los leds
-  if(voltaje < 0.8){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, LOW);              
-    digitalWrite(4, LOW);   
-    digitalWrite(5, LOW);   
-    digitalWrite(6, LOW);   
-    digitalWrite(7, LOW);       
-  }else if(voltaje >= 0.9 & voltaje <= 1.6){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, HIGH);              
-    digitalWrite(4, LOW);   
-    digitalWrite(5, LOW);   
-    digitalWrite(6, LOW);   
-    digitalWrite(7, LOW);
-  }else if(voltaje >= 1.7 & voltaje <= 2.5){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, HIGH);              
-    digitalWrite(4, HIGH);   
-    digitalWrite(5, LOW);   
-    digitalWrite(6, LOW);   
-    digitalWrite(7, LOW);
-  }else if(voltaje >= 2.6 & voltaje <= 3.3){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, HIGH);              
-    digitalWrite(4, HIGH);   
-    digitalWrite(5, HIGH);   
-    digitalWrite(6, LOW);   
-    digitalWrite(7, LOW);
-  }else if(voltaje >= 3.4 & voltaje <= 4.1){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, HIGH);              
-    digitalWrite(4, HIGH);   
-    digitalWrite(5, HIGH);   
-    digitalWrite(6, HIGH);   
-    digitalWrite(7, LOW);
-  }else if(voltaje >= 4.2 & voltaje <= 5.0){
-    digitalWrite(2, HIGH);             
-    digitalWrite(3, HIGH);              
-    digitalWrite(4, HIGH);   
-    digitalWrite(5, HIGH);   
-    digitalWrite(6, HIGH);   
-    digitalWrite(7, HIGH);
+  //Lectura del puerto A0
+  int valueAnalog = analogRead(0);
+  //Conversión para obtener la secuencia
+  int positionLed = (valueAnalog * 9) / 1024;
+  delay(10);
+  lightVumeter(positionLed);
+}
+
+/**
+ * Función para encender los led segun el número de
+ * secuencia 
+ */
+void lightVumeter(int number) {
+  byte numberBit = vumeter[number];
+  for (int i = 0; i < 8; i++)  {
+    int bit = bitRead(numberBit, i);
+    digitalWrite(pins[i], bit);
   }
-  Serial.println(voltaje);
-  delay(10);        
 }
